@@ -1,9 +1,34 @@
+@font-face {
+  font-family: "Netflix";
+  src: url("../assets/NetflixSansLight.woff");
+}
+/* @font-face {
+  font-family: "BebasNeue-Book";
+  src: url("../assets/BebasNeue-Book.ttf");
+}
+@font-face {
+  font-family: "BebasNeue-Light";
+  src: url("../assets/BebasNeue-Light.ttf");
+}
+@font-face {
+  font-family: "BebasNeue-Regular";
+  src: url("../assets/BebasNeue-Regular.ttf");
+}
+@font-face {
+  font-family: "BebasNeue-Thin";
+  src: url("../assets/BebasNeue-Thin.ttf");
+} */
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(113, 63, 230);
+  background-color: #000;
+  font-family: "Netflix", serif;
+  color: #fff;
 }
 
 a {
