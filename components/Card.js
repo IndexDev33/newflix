@@ -4,7 +4,6 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
 const CardDiv = styled.div`
   position: relative;
-  /* height: 300px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,10 +38,11 @@ const CardTextTitle = styled.h1`
 const CardTextSubtitle = styled.h2`
   font-size: 1.1rem;
   font-weight: lighter;
+  margin: 0.5rem 1rem;
 `;
 
 const CardAnimation = styled.div`
-  margin: -10% 0 0 0;
+  /* margin: -10% 0 0 0; */
   position: relative;
 `;
 
@@ -99,6 +99,14 @@ const CardImageNoVideoContainer = styled.div`
   margin: 0 1em 0 0;
   flex-grow: 0;
   flex-shrink: 0;
+`;
+
+const InputCardForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 `;
 
 const InputCardBtn = styled.button`
@@ -162,10 +170,10 @@ export default function Card({
     Email address
   </label>;
   const InputCard = (
-    <form>
-      <h3>
+    <InputCardForm>
+      <CardTextSubtitle>
         Ready to watch? Enter your email to create or restart your membership.
-      </h3>
+      </CardTextSubtitle>
       <InputCardInput
         type="email"
         name="email"
@@ -175,16 +183,14 @@ export default function Card({
         minlength="5"
         placeholder="Email Address"
       />
-
       <InputCardBtn>
         Get Started
         <ArrowForwardIosIcon style={{ fontSize: 13 }} />
       </InputCardBtn>
-    </form>
+    </InputCardForm>
   );
   return (
     <CardDiv bgImage={bgImage}>
-      {/* <CardContainer> */}
       <CardText>
         <CardTextTitle>{title}</CardTextTitle>
         <CardTextSubtitle>{subtitle}</CardTextSubtitle>
@@ -217,7 +223,6 @@ export default function Card({
           </CardAnimationNoVideo>
         )}
       </CardAnimation>
-      {/* </CardContainer> */}
     </CardDiv>
   );
 }
