@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Lang from "./Lang";
 import Logo from "./Logo";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -43,12 +45,18 @@ const SingInBtn = styled.div`
 `;
 
 export default function Header() {
+  const { pathname } = useRouter();
+
   return (
     <HeaderContainer>
       <HeaderDiv>
-        <Logo />
-        <Lang />
-        <SingInBtn onClick={() => console.log("sign in")}>Sign In</SingInBtn>
+        <Logo onClick={() => console.log(router)} />
+        {pathname === "/" && <Lang />}
+        {pathname === "/" && (
+          <Link href="/login">
+            <SingInBtn onClick={() => console.log(pathname)}>Sign In</SingInBtn>
+          </Link>
+        )}
       </HeaderDiv>
     </HeaderContainer>
   );

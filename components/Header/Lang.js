@@ -5,11 +5,6 @@ import styled from "styled-components";
 
 const LangSelectionContainer = styled.div`
   display: inline-block;
-  /* margin: 0 0.75rem; */
-  /* border: 1px solid inherit; */
-  /* background-color: red; */
-  /* width: 50%; */
-  /* justify-self: center; */
 `;
 
 const LangPicker = styled.div`
@@ -39,16 +34,16 @@ const IconLangSelect = styled.div`
 `;
 
 const SelectLangList = styled.select`
+  border: solid 1px rgba(255, 255, 255, 0.3);
   line-height: 1.6em;
   background: rgba(0, 0, 0, 0.4);
-  /* border: 1px solid inherit; */
   color: inherit;
   font-size: 0.875rem;
-  padding: 0.2rem 2rem;
+  padding: ${(props) => (props.big ? "0.7rem 2.5rem" : "0.2rem 2rem")};
   -webkit-appearance: none;
 `;
 
-export default function Lang() {
+export default function Lang({ big }) {
   return (
     <LangSelectionContainer>
       <LangPicker>
@@ -61,9 +56,10 @@ export default function Lang() {
             defaultValue="English"
             tabindex="0"
             placeholder="lang-switcher"
+            big={big}
           >
             <option lang="es">Español</option>
-            <option>English</option>
+            <option lang="en">English</option>
           </SelectLangList>
         </SelectLang>
       </LangPicker>
