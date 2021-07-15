@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dicebear/avatars": "^4.6.9",
+    "@dicebear/avatars-male-sprites": "^4.6.9",
+    "@dicebear/micah": "^4.6.9",
     "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
     "firebase": "^8.7.1",
     "next": "11.0.1",
     "react": "17.0.2",

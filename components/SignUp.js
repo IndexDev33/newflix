@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { auth, provider } from "../firebase";
+import { auth, provider } from "./firebase";
+import SignContext from "../store/signing-context";
 
 const Container = styled.div`
   position: relative;
@@ -11,6 +12,9 @@ const Container = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid grey;
   padding: 0 5%;
+  background-color: #fff;
+  height: calc(100vh - 63px);
+  color: #000;
 
   @media only screen and (min-width: 650px) {
     max-width: 450px;
@@ -38,14 +42,15 @@ const TitleForm = styled.h2`
 `;
 
 const Input = styled.input`
-  background: #333;
+  background: #fff;
   border-radius: 4px;
   border: 0;
-  color: #fff;
+  color: #000;
   height: 50px;
   line-height: 50px;
   padding: 16px 20px 0;
   width: 100%;
+  border: solid red 1px;
 `;
 
 const Btn = styled.button`
@@ -83,33 +88,6 @@ const LabelRemeberMe = styled.label`
   align-items: center;
 `;
 
-const HybridInfo = styled.div`
-  max-width: 550px;
-  width: 100%;
-  color: #737373;
-  font-size: 12px;
-  font-weight: 500;
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  a {
-    color: #fff;
-  }
-`;
-
-const FacebookContainer = styled.div`
-  max-height: 30px;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  img {
-    height: 20px;
-  }
-`;
-
 const InputCheck = styled.input`
   -webkit-appearance: none;
   position: relative;
@@ -141,28 +119,12 @@ const InputCheck = styled.input`
   }
 `;
 
-const SignUp = styled.div`
-  display: flex;
-  gap: 0.3rem;
-  font-size: 1rem;
-`;
-
-const Leyend = styled.p`
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
-  color: #8c8c8c;
-  margin-bottom: 8rem;
-  @media only screen and (min-width: 650px) {
-    margin-bottom: 2rem;
-  }
-`;
-
-export default function SignInCard({ bgImage, title }) {
+export default function SignUpCard({ bgImage, title }) {
   const [errorMail, setErrorMail] = useState(0);
   const [errorPassword, setErrorPassword] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const { emailSignUp } = useContext(SignContext);
 
   const signInHandler = (event) => {
     event.preventDefault();
@@ -190,7 +152,9 @@ export default function SignInCard({ bgImage, title }) {
           emailRef.current.value,
           passwordRef.current.value
         )
-        .then((user) => console.log(user))
+        .then((user) => {
+          console.log(user);
+        })
         .catch((err) => console.log(err));
     }
   };
@@ -201,8 +165,8 @@ export default function SignInCard({ bgImage, title }) {
       .then((result) => {
         var credential = result.credential;
         var user = result.user;
-        console.log(user);
         var accessToken = credential.accessToken;
+        console.log(user, user.providerData[0].uid);
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -225,6 +189,7 @@ export default function SignInCard({ bgImage, title }) {
           maxlength="50"
           minlength="5"
           placeholder="Email or phone number"
+          defaultValue={emailSignUp}
         />
         {errorMail > 0 && (
           <ErrorMessage>
@@ -261,20 +226,6 @@ export default function SignInCard({ bgImage, title }) {
           <Link href="/">Need help?</Link>
         </RememberMe>
       </Form>
-      <HybridInfo>
-        <FacebookContainer onClick={clickFacebook}>
-          <img src="https://assets.nflxext.com/ffe/siteui/login/images/FB-f-Logo__blue_57.png" />
-          Login with Facebook
-        </FacebookContainer>
-        <SignUp>
-          New to Netflix?
-          <Link href="/">Sign up now</Link>
-        </SignUp>
-        <Leyend>
-          This page is protected by Google reCAPTCHA to ensure you're not a bot.{" "}
-          <Link href="/">Learn more</Link>
-        </Leyend>
-      </HybridInfo>
     </Container>
   );
 }

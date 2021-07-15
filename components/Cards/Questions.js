@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import AddIcon from "@material-ui/icons/Add";
 import CartContainer from "./CardContainer";
+import InputCard from "./Input";
 
 const Container = styled.ul`
   max-width: 815px;
@@ -94,6 +95,7 @@ export default function QuestionsCard({ bgImage, title, subtitle, questions }) {
           </Item>
         ))}
       </Container>
+      <InputCard />
     </CartContainer>
   );
 }

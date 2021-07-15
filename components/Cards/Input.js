@@ -1,7 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import CartContainer from "./CardContainer";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { useRouter } from "next/router";
+
+import SignContext from "../../store/signing-context";
 
 const Form = styled.form`
   display: flex;
@@ -101,8 +104,11 @@ const ErrorMessage = styled.div`
 `;
 
 export default function InputCard({ bgImage, title, subtitle }) {
-  const [errorMail, setErrorMail] = useState(0);
+  const router = useRouter();
+  const [errorMail, setErrorMail] = useState(null);
   const inputRef = useRef();
+  const { setEmail } = useContext(SignContext);
+
   const messageValidate = (
     <ErrorMessage>
       {errorMail === 1
@@ -123,6 +129,9 @@ export default function InputCard({ bgImage, title, subtitle }) {
       setErrorMail(2);
     } else {
       setErrorMail(0);
+      router.push("/signup");
+      console.log(inputRef.current.value);
+      setEmail(inputRef.current.value);
     }
   };
 

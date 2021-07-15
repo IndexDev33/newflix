@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   position: relative;
@@ -7,20 +8,12 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 8px solid #222;
+  border-bottom: ${(props) => (props.homePage ? "8px solid #222" : "unset")};
   padding: 50px 5%;
   margin-bottom: 0;
-  background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.8) 0,
-      rgba(0, 0, 0, 0) 40%,
-      rgba(0, 0, 0, 0) 75%,
-      rgba(0, 0, 0, 0.8) 100%
-    ),
-    url("${(props) => props.bgImage}") center/cover;
-  &:last-child {
-    padding: 50px 5% 0;
-  }
+  background: ${(props) => props.stylesMainBg};
+  background-position: center;
+  background-size: cover;
 
   @media only screen and (min-width: 550px) {
     padding: ${(props) => (props.main ? "80px 10% 150px 10%" : "70px 45px")};
@@ -29,6 +22,7 @@ const Container = styled.div`
   @media only screen and (min-width: 950px) {
     flex-direction: ${(props) => props.direction};
   }
+
   @media only screen and (min-width: 1200px) {
     justify-content: center;
   }
@@ -43,6 +37,7 @@ const TextContainer = styled.div`
   height: 100%;
   flex: 0 1 auto;
   z-index: 3;
+
   @media only screen and (min-width: 950px) {
     text-align: ${(props) => (props.main ? "center" : "left")};
   }
@@ -77,13 +72,30 @@ export default function CardContainer({
   bgImage,
   title,
   subtitle,
-  links,
   direction,
   main,
-  big,
 }) {
+  const { pathname } = useRouter();
+
+  // const stylesMainBg = main
+  //   ? `linear-gradient(to top, rgba(0, 0, 0, 0.8) 0,  rgba(0, 0, 0, 0) 40%,  rgba(0, 0, 0, 0) 75%,  rgba(0, 0, 0, 0.8) 100%),url('${bgImage}')`
+  //   : "";
+
+  const stylesMainBg =
+    pathname === "/signup"
+      ? "#f3f3f3"
+      : main
+      ? `linear-gradient(to top, rgba(0, 0, 0, 0.8) 0,  rgba(0, 0, 0, 0) 40%,  rgba(0, 0, 0, 0) 75%,  rgba(0, 0, 0, 0.8) 100%),url('${bgImage}')`
+      : "";
+
   return (
-    <Container bgImage={bgImage} direction={direction} main={main}>
+    <Container
+      stylesMainBg={stylesMainBg}
+      bgImage={bgImage}
+      direction={direction}
+      main={main}
+      homePage={pathname === "/"}
+    >
       {title && (
         <TextContainer main={main}>
           <Title main={main}>{title}</Title>

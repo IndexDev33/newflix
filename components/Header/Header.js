@@ -12,11 +12,11 @@ const HeaderContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 10;
-  height: 45px;
+  height: 65px;
   width: 100%;
   background-color: transparent;
   max-width: 1920px;
-  margin-top: 20px;
+  padding-top: 20px;
   transition: background-color 0.5s;
 `;
 
@@ -42,6 +42,7 @@ const SingInBtn = styled.div`
   line-height: normal;
   font-weight: 400;
   border-radius: 3px;
+  cursor: pointer;
 `;
 
 export default function Header() {
@@ -53,7 +54,7 @@ export default function Header() {
         <Logo onClick={() => console.log(router)} />
         {pathname === "/" && <Lang />}
         {pathname === "/" && (
-          <Link href="/login">
+          <Link href="/signin">
             <SingInBtn onClick={() => console.log(pathname)}>Sign In</SingInBtn>
           </Link>
         )}

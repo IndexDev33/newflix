@@ -2,6 +2,7 @@ import React from "react";
 import LanguageIcon from "@material-ui/icons/Language";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const LangSelectionContainer = styled.div`
   display: inline-block;
@@ -36,7 +37,7 @@ const IconLangSelect = styled.div`
 const SelectLangList = styled.select`
   border: solid 1px rgba(255, 255, 255, 0.3);
   line-height: 1.6em;
-  background: rgba(0, 0, 0, 0.4);
+  background: ${(props) => (props.bgColor ? "unset" : "rgba(0, 0, 0, 0.4)")};
   color: inherit;
   font-size: 0.875rem;
   padding: ${(props) => (props.big ? "0.7rem 2.5rem" : "0.2rem 2rem")};
@@ -44,6 +45,7 @@ const SelectLangList = styled.select`
 `;
 
 export default function Lang({ big }) {
+  const { pathname } = useRouter();
   return (
     <LangSelectionContainer>
       <LangPicker>
@@ -53,6 +55,7 @@ export default function Lang({ big }) {
         </IconLangSelect>
         <SelectLang>
           <SelectLangList
+            bgColor={pathname === "/signup"}
             defaultValue="English"
             tabindex="0"
             placeholder="lang-switcher"
