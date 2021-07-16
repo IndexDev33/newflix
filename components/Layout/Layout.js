@@ -12,6 +12,7 @@ const LayoutWrapper = styled.div`
 
 export default function Layout({ children }) {
   const { pathname } = useRouter();
+  console.log("Layout Page Rendere");
   return (
     <SignProvider>
       <LayoutWrapper singup={pathname === "/signup"}>

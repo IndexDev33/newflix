@@ -1,10 +1,9 @@
 import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { auth, provider } from "../firebase/firebase";
+import { auth, provider, database } from "../firebase/firebase";
 import { useRouter } from "next/router";
 import SignContext from "../../store/signing-context";
-import { gettingProfiles } from "../../hooks/database";
 
 const Wrapper = styled.div`
   position: relative;
@@ -225,6 +224,40 @@ export default function SignInCard({ signUpCard, title }) {
   const passwordRef = useRef();
   const router = useRouter();
 
+  const postingData = (userId) => {
+    const DUMMY_PROFILES = [
+      {
+        name: "luzda1",
+        avatar: "https://avatars.dicebear.com/api/avataaars/luzda1.svg",
+        color: "red",
+      },
+      {
+        name: "oddie1",
+        avatar: "https://avatars.dicebear.com/api/bottts/oddie1.svg",
+        color: "red",
+      },
+      {
+        name: "kira2",
+        avatar: "https://avatars.dicebear.com/api/micah/kira2.svg",
+        color: "red",
+      },
+    ];
+    // const DUMMY_PROFILES = [
+    //   [
+    //     "luzda1",
+    //     "https://avatars.dicebear.com/api/avataaars/luzda1.svg",
+    //     "red",
+    //   ],
+
+    //   ["oddie1", "https://avatars.dicebear.com/api/bottts/oddie1.svg", "red"],
+
+    //   ["kira2", "https://avatars.dicebear.com/api/micah/kira2.svg", "red"],
+
+    //   ["kiara3", "https://avatars.dicebear.com/api/gridy/kiara3.svg", "red"],
+    // ];
+    database.ref("users/" + userId + "/profiles").set(DUMMY_PROFILES);
+  };
+
   const stylesMainBg =
     router.pathname === "/signup"
       ? "transparent"
@@ -242,29 +275,40 @@ export default function SignInCard({ signUpCard, title }) {
 
     const passingChecks = checkEmail && checkPassword;
 
-    if (passingChecks) {
-      const methodSign =
-        router.pathname === "/signin"
-          ? auth.signInWithEmailAndPassword(
-              emailRef.current.value,
-              passwordRef.current.value
-            )
-          : auth.createUserWithEmailAndPassword(
-              emailRef.current.value,
-              passwordRef.current.value
-            );
-      //TODO: ver que cuando este logeado pase a /browse
-      methodSign
+    if (passingChecks && router.pathname === "/signup") {
+      auth
+        .createUserWithEmailAndPassword(
+          emailRef.current.value,
+          passwordRef.current.value
+        )
         .then((user) => {
-          console.log(user);
           setSignError(null);
+          toggleLogIn(true);
           router.push("/browse");
+          setUserId(user.user.uid);
+          postingData(user.user.uid);
+        })
+        .catch((err) => {
+          setSignError(err.code);
+          toggleLogIn(false);
+        });
+    }
+    if (passingChecks && router.pathname === "/signin") {
+      auth
+        .signInWithEmailAndPassword(
+          emailRef.current.value,
+          passwordRef.current.value
+        )
+        .then((user) => {
+          setSignError(null);
+          toggleLogIn(true);
+          router.push("/browse");
+          setUserId(user.user.uid);
+
           remember && localStorage.setItem("userId", user.user.uid);
           remember && localStorage.setItem("email", emailRef.current.value);
           remember &&
             localStorage.setItem("password", passwordRef.current.value);
-          toggleLogIn(true);
-          setUserId(user.user.uid);
         })
         .catch((err) => {
           setSignError(err.code);
