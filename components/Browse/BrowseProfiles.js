@@ -36,8 +36,6 @@ const Profile = styled.li`
   position: relative;
   align-items: center;
   justify-content: space-between;
-  /* height: 15vw; */
-  /* width: 15vh; */
   font-size: 90px;
   color: grey;
   max-width: 40%;
@@ -100,12 +98,11 @@ const EditingProfile = styled.div`
   }
 `;
 
-export default function BrowseProfiles({ onCreating, userId }) {
-  const { setAvatar, profiles } = useContext(UserContext);
+export default function BrowseProfiles({ userId }) {
+  const { setAvatar, profiles, setStep, setProfiles } = useContext(UserContext);
   const [manage, setManage] = useState(false);
-  const clickHandlerEditProfile = ({ avatar, name, color }, index) => {
-    console.log(avatar, name, color, index, profiles);
-    onCreating();
+  const editingPrfileHandler = ({ avatar, name, color }, index) => {
+    setStep("editing");
     setAvatar({
       avatar,
       name,
@@ -113,26 +110,26 @@ export default function BrowseProfiles({ onCreating, userId }) {
       index,
     });
   };
-  const clickHandlerCreateProfile = () => {
-    console.log(userId, profiles.length);
-    onCreating();
+  const createProfileHandler = () => {
+    setStep("creating");
     setAvatar({
       avatar: "https://avatars.dicebear.com/api/bottts/377.svg",
-      color: `green`,
+      color: "#0af07b",
       name: "",
       index: profiles.length,
     });
   };
 
-  // useEffect(() => {
-  //   const httpURL = `https://newflix-c6f11-default-rtdb.firebaseio.com/users/${userId}.json`;
-  //   axios
-  //     .get(httpURL)
-  //     .then((res) => {
-  //       setProfiles(res.data.profiles);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
+  useEffect(() => {
+    const httpURL = `https://newflix-c6f11-default-rtdb.firebaseio.com/users/${userId}.json`;
+    // const httpURL = `https://newflix-c6f11-default-rtdb.firebaseio.com/users/GMJ6xuYPbNRV9F95M6eycUFRfNy1.json`;
+    axios
+      .get(httpURL)
+      .then((res) => {
+        setProfiles(res.data.profiles);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <Container>
@@ -143,7 +140,7 @@ export default function BrowseProfiles({ onCreating, userId }) {
             <Profile>
               {manage && (
                 <EditingProfile
-                  onClick={() => clickHandlerEditProfile(profile, i)}
+                  onClick={() => editingPrfileHandler(profile, i)}
                 >
                   <CreateIcon style={{ fontSize: "inherit" }} />
                 </EditingProfile>
@@ -156,7 +153,7 @@ export default function BrowseProfiles({ onCreating, userId }) {
           </Link>
         ))}
         {profiles.length < 5 && (
-          <Profile onClick={clickHandlerCreateProfile}>
+          <Profile onClick={createProfileHandler}>
             <ProfileImgContainer style={{ backgroundColor: "transparent" }}>
               <AddCircleOutlinedIcon style={{ fontSize: "inherit" }} />
             </ProfileImgContainer>

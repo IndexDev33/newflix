@@ -84,7 +84,7 @@ const colors = [
   "#0b850a",
 ];
 
-export default function SmallCarousel({ type, length, onChooseAvatar }) {
+export default function SmallCarousel({ type, length }) {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
   const carouselRef = useRef(null);

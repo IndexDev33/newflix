@@ -5,6 +5,8 @@ const UserContext = React.createContext({
   setProfiles: () => {},
   avatar: [],
   setAvatar: () => {},
+  step: "",
+  setStep: () => {},
 });
 
 export default UserContext;
@@ -17,12 +19,15 @@ export function UserProvider(props) {
     name: "",
     index: "",
   });
+  const [step, setStep] = useState("showing");
 
   const userContext = {
     profiles,
     setProfiles: (val) => setProfiles(val),
     avatar,
     setAvatar: (val) => setAvatar(val),
+    step,
+    setStep: (val) => setStep(val),
   };
   return (
     <UserContext.Provider value={userContext}>

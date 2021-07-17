@@ -69,12 +69,12 @@ const arrayCarousels = [
 ];
 
 export default function ChooseAvatar({ onChoosing, onChooseAvatar }) {
-  const { avatar } = useContext(UserContext);
+  const { avatar, setStep, step } = useContext(UserContext);
   return (
     <Container>
       <Controls>
         <Info>
-          <div onClick={() => onChoosing(false)}>
+          <div onClick={() => setStep(step.split("-")[0])}>
             <ArrowBackIcon />
           </div>
           <Text>
@@ -94,13 +94,8 @@ export default function ChooseAvatar({ onChoosing, onChooseAvatar }) {
           </ImgContainer>
         </UserContainer>
       </Controls>
-      {arrayCarousels.map((carouselData) => (
-        <SmallCarousel
-          key={carouselData.type}
-          onChooseAvatar={onChooseAvatar}
-          type={carouselData.type}
-          length={carouselData.lengthCarousel}
-        />
+      {arrayCarousels.map(({ type, lengthCarousel }) => (
+        <SmallCarousel key={type} type={type} length={lengthCarousel} />
       ))}
     </Container>
   );

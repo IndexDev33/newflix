@@ -158,37 +158,45 @@ const SignError = styled.div`
   margin-top: 0.5rem;
 `;
 
-export default function AddProfile({ onChoosing, onCreating, userId }) {
-  const { avatar, profiles, setAvatar, setProfiles } = useContext(UserContext);
+export default function EditingProfile({ userId }) {
+  const { avatar, profiles, setAvatar, setStep, step } =
+    useContext(UserContext);
   const [errorName, setErrorName] = useState(false);
   const userNameRef = useRef(null);
-  const continuekHandler = () => {
+  const creatingProfileHandler = () => {
     if (userNameRef.current.value.length > 0) {
-      onCreating();
+      setStep("showing");
       setErrorName(false);
-      const profilesFetched = profiles;
       const avatarFetched = avatar;
       avatarFetched.name = userNameRef.current.value;
-      profilesFetched[avatar.index] = avatarFetched;
-      // setProfiles(profilesFetched);
-      database.ref("users/" + userId + "/profiles").set(profilesFetched);
+      database
+        .ref("users/" + userId + "/profiles/" + avatar.index)
+        .update(avatarFetched);
     } else {
       setErrorName(true);
     }
   };
 
-  const editClickHandler = () => {
-    onChoosing(true);
+  const editingAvatarHandler = () => {
+    setStep(step + "-choosing");
     setAvatar({ ...avatar, name: userNameRef.current.value });
+  };
+
+  const deleteHandler = () => {
+    console.log(avatar.index);
+    const profilesFetched = profiles;
+    profilesFetched.splice(avatar.index, 1);
+    database.ref("users/" + userId + "/profiles").set(profilesFetched);
+    setStep("showing");
   };
 
   return (
     <Container>
-      <Title>Add Profile</Title>
+      <Title>{step === "creating" ? "Add Profile" : "Editing Profile"}</Title>
       <Subtitle>Add a profile for another person watching Netflix.</Subtitle>
       <NewProfile>
-        <ImgContainer onClick={() => console.log(avatar)} color={avatar.color}>
-          <Icon onClick={editClickHandler}>
+        <ImgContainer color={avatar.color}>
+          <Icon onClick={editingAvatarHandler}>
             <CreateIcon style={{ fontSize: "inherit" }} />
           </Icon>
           <ProfileImage src={avatar.avatar} />
@@ -211,8 +219,13 @@ export default function AddProfile({ onChoosing, onCreating, userId }) {
         </CheckKidsContainer>
       </NewProfile>
       <ContainerBtns>
-        <ProfilesBtn onClick={continuekHandler}>Continue</ProfilesBtn>
-        <ProfilesBtn onClick={() => onCreating()}>Cancel</ProfilesBtn>
+        <ProfilesBtn onClick={creatingProfileHandler}>Continue</ProfilesBtn>
+        <ProfilesBtn onClick={() => setStep("showing")}>Cancel</ProfilesBtn>
+        {step === "editing" && (
+          <ProfilesBtn onClick={() => deleteHandler()}>
+            Delete Profile
+          </ProfilesBtn>
+        )}
       </ContainerBtns>
     </Container>
   );

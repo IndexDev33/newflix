@@ -42,9 +42,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
-  @media only screen and (min-width: 950px) {
-  }
 `;
 
 const TitleForm = styled.h2`
@@ -80,7 +77,6 @@ const SignError = styled.div`
   background: #e87c03;
   border-radius: 4px;
   font-size: 14px;
-  /* margin: 0 0 16px; */
   padding: 10px 15px;
   width: 100%;
   a {
@@ -208,6 +204,7 @@ const Leyend = styled.p`
   a {
     color: #2a9df4;
   }
+
   @media only screen and (min-width: 650px) {
     margin-bottom: 2rem;
   }
@@ -225,19 +222,7 @@ export default function SignInCard({ signUpCard, title }) {
   const router = useRouter();
 
   const postingData = (userId) => {
-    const DUMMY_PROFILES = [
-      {
-        name: "luzda1",
-        avatar: "https://avatars.dicebear.com/api/avataaars/luzda1.svg",
-        color: "red",
-      },
-      {
-        name: "oddie1",
-        avatar: "https://avatars.dicebear.com/api/bottts/oddie1.svg",
-        color: "red",
-      },
-    ];
-    database.ref("users/" + userId + "/profiles").set(DUMMY_PROFILES);
+    database.ref("users/" + userId + "/profiles").set([]);
   };
 
   const stylesMainBg =
