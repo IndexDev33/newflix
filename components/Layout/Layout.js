@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import styled from "styled-components";
 import { SignProvider } from "../../store/signing-context";
 import { useRouter } from "next/router";
+import { UserProvider } from "../../store/user-context";
 
 const LayoutWrapper = styled.div`
   background-color: ${(props) => (props.singup ? "#fff" : "#000")};
@@ -15,10 +16,12 @@ export default function Layout({ children }) {
   console.log("Layout Page Rendere");
   return (
     <SignProvider>
-      <LayoutWrapper singup={pathname === "/signup"}>
-        <Header />
-        {children}
-      </LayoutWrapper>
+      <UserProvider>
+        <LayoutWrapper singup={pathname === "/signup"}>
+          <Header />
+          {children}
+        </LayoutWrapper>
+      </UserProvider>
     </SignProvider>
   );
 }

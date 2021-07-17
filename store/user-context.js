@@ -1,23 +1,28 @@
 import React, { useState } from "react";
 
 const UserContext = React.createContext({
-  userId: "",
-  setUserId: () => {},
   profiles: [],
   setProfiles: () => {},
+  avatar: [],
+  setAvatar: () => {},
 });
 
 export default UserContext;
 
 export function UserProvider(props) {
-  const [userId, setUserId] = useState("");
   const [profiles, setProfiles] = useState([]);
+  const [avatar, setAvatar] = useState({
+    avatar: "https://avatars.dicebear.com/api/bottts/377.svg",
+    color: `green`,
+    name: "",
+    index: "",
+  });
 
   const userContext = {
-    userId,
-    setEmail: (val) => setUserId(val),
     profiles,
     setProfiles: (val) => setProfiles(val),
+    avatar,
+    setAvatar: (val) => setAvatar(val),
   };
   return (
     <UserContext.Provider value={userContext}>

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
 import Link from "next/link";
 import { gettingProfiles } from "../../hooks/database";
 import CreateIcon from "@material-ui/icons/Create";
+import UserContext from "../../store/user-context";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -98,28 +100,39 @@ const EditingProfile = styled.div`
   }
 `;
 
-export default function BrowseProfiles({
-  onCreating,
-  profiles,
-  onChooseAvatar,
-}) {
+export default function BrowseProfiles({ onCreating, userId }) {
+  const { setAvatar, profiles } = useContext(UserContext);
   const [manage, setManage] = useState(false);
-  const clickHandlerEditProfile = (profile) => {
+  const clickHandlerEditProfile = ({ avatar, name, color }, index) => {
+    console.log(avatar, name, color, index, profiles);
     onCreating();
-    onChooseAvatar({
-      avatar: profile.avatar,
-      name: profile.name,
-      color: profile.color,
+    setAvatar({
+      avatar,
+      name,
+      color,
+      index,
     });
   };
   const clickHandlerCreateProfile = () => {
+    console.log(userId, profiles.length);
     onCreating();
-    onChooseAvatar({
+    setAvatar({
       avatar: "https://avatars.dicebear.com/api/bottts/377.svg",
       color: `green`,
       name: "",
+      index: profiles.length,
     });
   };
+
+  // useEffect(() => {
+  //   const httpURL = `https://newflix-c6f11-default-rtdb.firebaseio.com/users/${userId}.json`;
+  //   axios
+  //     .get(httpURL)
+  //     .then((res) => {
+  //       setProfiles(res.data.profiles);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   return (
     <Container>
@@ -130,7 +143,7 @@ export default function BrowseProfiles({
             <Profile>
               {manage && (
                 <EditingProfile
-                  onClick={() => clickHandlerEditProfile(profile)}
+                  onClick={() => clickHandlerEditProfile(profile, i)}
                 >
                   <CreateIcon style={{ fontSize: "inherit" }} />
                 </EditingProfile>
@@ -142,12 +155,14 @@ export default function BrowseProfiles({
             </Profile>
           </Link>
         ))}
-        <Profile onClick={() => clickHandlerCreateProfile()}>
-          <ProfileImgContainer style={{ backgroundColor: "transparent" }}>
-            <AddCircleOutlinedIcon style={{ fontSize: "inherit" }} />
-          </ProfileImgContainer>
-          <ProfileName>Add Profile</ProfileName>
-        </Profile>
+        {profiles.length < 5 && (
+          <Profile onClick={clickHandlerCreateProfile}>
+            <ProfileImgContainer style={{ backgroundColor: "transparent" }}>
+              <AddCircleOutlinedIcon style={{ fontSize: "inherit" }} />
+            </ProfileImgContainer>
+            <ProfileName>Add Profile</ProfileName>
+          </Profile>
+        )}
       </Profiles>
       <ProfilesBtn onClick={() => setManage(true)}>Manage Profiles</ProfilesBtn>
     </Container>

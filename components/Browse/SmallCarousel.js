@@ -1,7 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import Image from "next/image";
+import UserContext from "../../store/user-context";
 
 const Title = styled.h1`
   width: 100%;
@@ -65,28 +66,31 @@ const Arrow = styled.div`
   }
 `;
 
+const colors = [
+  "#0e9630",
+  "#0e9fed",
+  "#043661",
+  "#075038",
+  "#0af07b",
+  "#01042b",
+  "#04b303",
+  "#0b8506",
+  "#051da8",
+  "#0583bb",
+  "#0721f2",
+  "#007db0",
+  "#0720cc",
+  "#0e3064",
+  "#0b850a",
+];
+
 export default function SmallCarousel({ type, length, onChooseAvatar }) {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
-  const colors = [
-    "#0e9630",
-    "#0e9fed",
-    "#043661",
-    "#075038",
-    "#0af07b",
-    "#01042b",
-    "#04b303",
-    "#0b8506",
-    "#051da8",
-    "#0583bb",
-    "#0721f2",
-    "#007db0",
-    "#0720cc",
-    "#0e3064",
-    "#0b850a",
-  ].slice(0, length);
+  const { setAvatar, avatar } = useContext(UserContext);
+  const renderContent = colors.slice(0, length);
 
   useEffect(() => {
     if (containerRef.current.scrollWidth < carouselRef.current.scrollWidth) {
@@ -94,7 +98,7 @@ export default function SmallCarousel({ type, length, onChooseAvatar }) {
     }
   }, []);
 
-  const clickHandler = (direction) => {
+  const scrollHandler = (direction) => {
     const wContainer = containerRef.current.scrollWidth;
     const wCarousel = carouselRef.current.scrollWidth;
     const placeOnCarousel = carouselRef.current.scrollLeft;
@@ -122,7 +126,7 @@ export default function SmallCarousel({ type, length, onChooseAvatar }) {
     <CarouselContainer ref={containerRef}>
       <Title>{type.toUpperCase()}</Title>
       {showRight && (
-        <Arrow onClick={() => clickHandler("right")}>
+        <Arrow onClick={() => scrollHandler("right")}>
           <ArrowForwardIosIcon />
         </Arrow>
       )}
@@ -130,22 +134,24 @@ export default function SmallCarousel({ type, length, onChooseAvatar }) {
       {showLeft && (
         <Arrow
           style={{ left: "-10px", transform: "rotate(180deg)" }}
-          onClick={() => clickHandler("left")}
+          onClick={() => scrollHandler("left")}
         >
           <ArrowForwardIosIcon />
         </Arrow>
       )}
 
-      <CarouselDiv onClick={() => clickHandler("left")} ref={carouselRef}>
-        {colors.map((color, i) => (
+      <CarouselDiv ref={carouselRef}>
+        {renderContent.map((color, i) => (
           <ImgContainer
             key={color}
             color={color}
             onClick={() =>
-              onChooseAvatar([
-                `https://avatars.dicebear.com/api/${type}/${i}.svg`,
+              setAvatar({
+                avatar: `https://avatars.dicebear.com/api/${type}/${i}.svg`,
                 color,
-              ])
+                index: avatar.index,
+                name: avatar.name,
+              })
             }
           >
             <ProfileImage

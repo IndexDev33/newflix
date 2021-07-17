@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import SmallCarousel from "./SmallCarousel";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Image from "next/image";
-
+import UserContext from "../../store/user-context";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -60,7 +60,16 @@ const ImgContainer = styled.div`
   position: relative;
 `;
 
-export default function ChooseAvatar({ onChoosing, onChooseAvatar, avatar }) {
+const arrayCarousels = [
+  { type: "gridy", lengthCarousel: 5 },
+  { type: "micah", lengthCarousel: 10 },
+  { type: "human", lengthCarousel: 12 },
+  { type: "male", lengthCarousel: 4 },
+  { type: "female", lengthCarousel: 5 },
+];
+
+export default function ChooseAvatar({ onChoosing, onChooseAvatar }) {
+  const { avatar } = useContext(UserContext);
   return (
     <Container>
       <Controls>
@@ -74,10 +83,10 @@ export default function ChooseAvatar({ onChoosing, onChooseAvatar, avatar }) {
           </Text>
         </Info>
         <UserContainer>
-          <SubtitlePage>usuario</SubtitlePage>
-          <ImgContainer color={avatar[1]}>
+          <SubtitlePage>{avatar.name}</SubtitlePage>
+          <ImgContainer color={avatar.color}>
             <Image
-              src={avatar[0]}
+              src={avatar.avatar}
               atl="profile avatar"
               width="50"
               height="50"
@@ -85,26 +94,14 @@ export default function ChooseAvatar({ onChoosing, onChooseAvatar, avatar }) {
           </ImgContainer>
         </UserContainer>
       </Controls>
-      <SmallCarousel
-        onChooseAvatar={onChooseAvatar}
-        type="bottts"
-        length="13"
-      />
-      <SmallCarousel onChooseAvatar={onChooseAvatar} type="gridy" length="7" />
-      <SmallCarousel onChooseAvatar={onChooseAvatar} type="micah" length="7" />
-      <SmallCarousel
-        onChooseAvatar={onChooseAvatar}
-        type="avataaars"
-        length="7"
-      />
-      <SmallCarousel
-        onChooseAvatar={onChooseAvatar}
-        type="jdenticon"
-        length="7"
-      />
-      <SmallCarousel onChooseAvatar={onChooseAvatar} type="human" length="15" />
-      <SmallCarousel onChooseAvatar={onChooseAvatar} type="male" length="7" />
-      <SmallCarousel onChooseAvatar={onChooseAvatar} type="female" length="7" />
+      {arrayCarousels.map((carouselData) => (
+        <SmallCarousel
+          key={carouselData.type}
+          onChooseAvatar={onChooseAvatar}
+          type={carouselData.type}
+          length={carouselData.lengthCarousel}
+        />
+      ))}
     </Container>
   );
 }

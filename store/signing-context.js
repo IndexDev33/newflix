@@ -7,8 +7,6 @@ const SignContext = React.createContext({
   toggleLogIn: () => {},
   userId: "",
   setUserId: () => {},
-  profiles: [],
-  setProfiles: () => {},
 });
 
 export default SignContext;
@@ -16,8 +14,7 @@ export default SignContext;
 export function SignProvider(props) {
   const [emailSignUp, setEmailSignUp] = useState("");
   const [logIn, setLogIn] = useState(false);
-  const [userId, setUserId] = useState(false);
-  const [profiles, setProfiles] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   const signContext = {
     emailSignUp,
@@ -26,8 +23,6 @@ export function SignProvider(props) {
     toggleLogIn: (val) => setLogIn(val),
     userId,
     setUserId: (val) => setUserId(val),
-    profiles,
-    setProfiles: (array) => setProfiles(array),
   };
   return (
     <SignContext.Provider value={signContext}>

@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
 import Link from "next/link";
 import { gettingProfiles } from "../../hooks/database";
 import CreateIcon from "@material-ui/icons/Create";
+import UserContext from "../../store/user-context";
+import { database } from "../firebase/firebase";
 
 const Container = styled.div`
   display: flex;
@@ -156,24 +158,37 @@ const SignError = styled.div`
   margin-top: 0.5rem;
 `;
 
-export default function AddProfile({ onChoosing, onCreating, avatar }) {
+export default function AddProfile({ onChoosing, onCreating, userId }) {
+  const { avatar, profiles, setAvatar, setProfiles } = useContext(UserContext);
   const [errorName, setErrorName] = useState(false);
   const userNameRef = useRef(null);
-  const clickHandler = () => {
+  const continuekHandler = () => {
     if (userNameRef.current.value.length > 0) {
-      onChoosing(true);
+      onCreating();
       setErrorName(false);
+      const profilesFetched = profiles;
+      const avatarFetched = avatar;
+      avatarFetched.name = userNameRef.current.value;
+      profilesFetched[avatar.index] = avatarFetched;
+      // setProfiles(profilesFetched);
+      database.ref("users/" + userId + "/profiles").set(profilesFetched);
     } else {
       setErrorName(true);
     }
   };
+
+  const editClickHandler = () => {
+    onChoosing(true);
+    setAvatar({ ...avatar, name: userNameRef.current.value });
+  };
+
   return (
     <Container>
       <Title>Add Profile</Title>
       <Subtitle>Add a profile for another person watching Netflix.</Subtitle>
       <NewProfile>
-        <ImgContainer color={avatar.color}>
-          <Icon onClick={() => onChoosing(true)}>
+        <ImgContainer onClick={() => console.log(avatar)} color={avatar.color}>
+          <Icon onClick={editClickHandler}>
             <CreateIcon style={{ fontSize: "inherit" }} />
           </Icon>
           <ProfileImage src={avatar.avatar} />
@@ -196,8 +211,8 @@ export default function AddProfile({ onChoosing, onCreating, avatar }) {
         </CheckKidsContainer>
       </NewProfile>
       <ContainerBtns>
-        <ProfilesBtn onClick={clickHandler}>Continue</ProfilesBtn>
-        <ProfilesBtn onClick={onCreating}>Cancel</ProfilesBtn>
+        <ProfilesBtn onClick={continuekHandler}>Continue</ProfilesBtn>
+        <ProfilesBtn onClick={() => onCreating()}>Cancel</ProfilesBtn>
       </ContainerBtns>
     </Container>
   );

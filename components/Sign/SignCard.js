@@ -236,25 +236,7 @@ export default function SignInCard({ signUpCard, title }) {
         avatar: "https://avatars.dicebear.com/api/bottts/oddie1.svg",
         color: "red",
       },
-      {
-        name: "kira2",
-        avatar: "https://avatars.dicebear.com/api/micah/kira2.svg",
-        color: "red",
-      },
     ];
-    // const DUMMY_PROFILES = [
-    //   [
-    //     "luzda1",
-    //     "https://avatars.dicebear.com/api/avataaars/luzda1.svg",
-    //     "red",
-    //   ],
-
-    //   ["oddie1", "https://avatars.dicebear.com/api/bottts/oddie1.svg", "red"],
-
-    //   ["kira2", "https://avatars.dicebear.com/api/micah/kira2.svg", "red"],
-
-    //   ["kiara3", "https://avatars.dicebear.com/api/gridy/kiara3.svg", "red"],
-    // ];
     database.ref("users/" + userId + "/profiles").set(DUMMY_PROFILES);
   };
 
