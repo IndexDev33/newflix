@@ -1,36 +1,25 @@
 import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
-import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
-import Link from "next/link";
-import { gettingProfiles } from "../../hooks/database";
 import CreateIcon from "@material-ui/icons/Create";
 import UserContext from "../../store/user-context";
 import { database } from "../firebase/firebase";
+import {
+  Container,
+  ImgContainer,
+  Title,
+  ProfilesBtn,
+  Input,
+  CheckBox,
+} from "../styles/profiles";
+import Image from "next/image";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const Title = styled.h1`
-  width: 100%;
-  font-weight: unset;
-  text-align: center;
+const Subtitle = styled.p`
   margin: 0;
-  @media only screen and (min-width: 650px) {
-    text-align: left;
-  }
-`;
-
-const Subtitle = styled.h4`
-  margin: 0;
-  font-weight: unset;
   color: grey;
   font-size: 13px;
   width: 100%;
   text-align: center;
+
   @media only screen and (min-width: 650px) {
     text-align: left;
   }
@@ -52,19 +41,6 @@ const NewProfile = styled.div`
   }
 `;
 
-const ImgContainer = styled.div`
-  height: 24vw;
-  width: 24vw;
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 5px;
-  background-color: ${(props) => props.color};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-
 const Icon = styled.div`
   position: absolute;
   width: 25px;
@@ -78,23 +54,7 @@ const Icon = styled.div`
   border-radius: 5px;
   font-size: 18px;
   color: #000;
-`;
-const ProfileImage = styled.img`
-  height: 100%;
-  width: 100%;
-`;
-
-const Input = styled.input`
-  background-color: rgba(255, 255, 255, 0.3);
-  height: 2rem;
-  border: none;
-  outline: ${(props) => (props.errorName ? "solid 2px red" : "none")};
-  color: #fff;
-  padding: 0.5rem;
-
-  &:focus {
-    outline: none;
-  }
+  z-index: 3;
 `;
 
 const CheckKidsContainer = styled.div`
@@ -107,47 +67,12 @@ const CheckKidsContainer = styled.div`
   }
 `;
 
-const CheckKids = styled.input`
-  position: relative;
-  background-color: transparent;
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border: solid rgba(255, 255, 255, 0.3) 1px;
-  &:checked:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    left: 50%;
-    width: 90%;
-    height: 90%;
-    background-color: rgba(255, 255, 255, 0.5);
-    clip-path: polygon(34% 60%, 86% 7%, 99% 24%, 31% 92%, 0 50%, 15% 34%);
-  }
-`;
-
 const ContainerBtns = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
-`;
-
-const ProfilesBtn = styled.button`
-  display: block;
-  margin: 4em 0 1em 0;
-  border: 1px solid grey;
-  color: #fff;
-  text-transform: uppercase;
-  padding: 0.5em 1.5em;
-  letter-spacing: 2px;
-  cursor: pointer;
-  background-color: red;
-  font-weight: 600;
-
-  &:nth-child(2) {
-    color: grey;
-    background-color: transparent;
-  }
 `;
 
 const SignError = styled.div`
@@ -159,7 +84,7 @@ const SignError = styled.div`
 `;
 
 export default function EditingProfile({ userId }) {
-  const { avatar, profiles, setAvatar, setStep, step } =
+  const { avatar, profiles, setAvatar, setStep, step, setProfiles } =
     useContext(UserContext);
   const [errorName, setErrorName] = useState(false);
   const userNameRef = useRef(null);
@@ -168,7 +93,11 @@ export default function EditingProfile({ userId }) {
       setStep("showing");
       setErrorName(false);
       const avatarFetched = avatar;
+      const profilesFetched = profiles;
       avatarFetched.name = userNameRef.current.value;
+      profilesFetched[profiles.length] = avatarFetched;
+
+      setProfiles(profilesFetched);
       database
         .ref("users/" + userId + "/profiles/" + avatar.index)
         .update(avatarFetched);
@@ -177,34 +106,42 @@ export default function EditingProfile({ userId }) {
     }
   };
 
+  const deleteHandler = () => {
+    setStep("showing");
+    const profilesFetched = profiles;
+    profilesFetched.splice(avatar.index, 1);
+    setProfiles(profilesFetched);
+    database.ref("users/" + userId + "/profiles").set(profilesFetched);
+  };
+
   const editingAvatarHandler = () => {
     setStep(step + "-choosing");
     setAvatar({ ...avatar, name: userNameRef.current.value });
   };
 
-  const deleteHandler = () => {
-    console.log(avatar.index);
-    const profilesFetched = profiles;
-    profilesFetched.splice(avatar.index, 1);
-    database.ref("users/" + userId + "/profiles").set(profilesFetched);
-    setStep("showing");
-  };
-
   return (
     <Container>
-      <Title>{step === "creating" ? "Add Profile" : "Editing Profile"}</Title>
+      <Title align="left">
+        {step === "creating" ? "Add Profile" : "Editing Profile"}
+      </Title>
       <Subtitle>Add a profile for another person watching Netflix.</Subtitle>
       <NewProfile>
         <ImgContainer color={avatar.color}>
           <Icon onClick={editingAvatarHandler}>
             <CreateIcon style={{ fontSize: "inherit" }} />
           </Icon>
-          <ProfileImage src={avatar.avatar} />
+          <Image
+            src={avatar.avatar}
+            alt="Profile Image"
+            height="100"
+            width="100"
+          />
         </ImgContainer>
         <div>
           <Input
+            small={true}
             defaultValue={avatar.name}
-            errorName={errorName}
+            error={errorName}
             ref={userNameRef}
             type="text"
             maxlength="50"
@@ -215,14 +152,18 @@ export default function EditingProfile({ userId }) {
         </div>
         <CheckKidsContainer>
           <p>Kid?</p>
-          <CheckKids type="checkbox" />
+          <CheckBox type="checkbox" />
         </CheckKidsContainer>
       </NewProfile>
       <ContainerBtns>
-        <ProfilesBtn onClick={creatingProfileHandler}>Continue</ProfilesBtn>
-        <ProfilesBtn onClick={() => setStep("showing")}>Cancel</ProfilesBtn>
+        <ProfilesBtn bgColor="#fff" onClick={creatingProfileHandler}>
+          Continue
+        </ProfilesBtn>
+        <ProfilesBtn bgColor="transparent" onClick={() => setStep("showing")}>
+          Cancel
+        </ProfilesBtn>
         {step === "editing" && (
-          <ProfilesBtn onClick={() => deleteHandler()}>
+          <ProfilesBtn bgColor="transparent" onClick={() => deleteHandler()}>
             Delete Profile
           </ProfilesBtn>
         )}

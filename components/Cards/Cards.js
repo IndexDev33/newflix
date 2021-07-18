@@ -57,115 +57,6 @@ const StandartData = {
     "https://occ-0-2976-3934.1.nflxso.net/dnm/api/v6/19OhWN2dO19C9txTON9tvTFtefw/AAAABdFTpLmANuJpYneLq8L5m7CunMCi8e8Nl4y7xaPVWzG3IeoDoq17egTQAthApKg_4sdRWdwuR8KadWu1frjL3JQImpwq.png?r=fcd",
 };
 
-const QuestionsData = {
-  title: "Frequently Asked Questions",
-  questions: [
-    {
-      question: "What is Netflix?",
-      answer:
-        "Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices. You can watch as much as you want, whenever you want without a single commercial – all for one low monthly price. There's always something new to discover and new TV shows and movies are added every week!",
-    },
-    {
-      question: "How much does Netflix cost?",
-      answer:
-        "Watch Netflix on your smartphone, tablet, Smart TV, laptop, or streaming device, all for one fixed monthly fee. Plans range from COP16,900 to COP38,900 a month. No extra costs, no contracts.",
-    },
-    {
-      question: "Where can I watch?",
-      answer:
-        "Watch anywhere, anytime, on an unlimited number of devices. Sign in with your Netflix account to watch instantly on the web at netflix.com from your personal computer or on any internet-connected device that offers the Netflix app, including smart TVs, smartphones, tablets, streaming media players and game consoles.",
-    },
-    {
-      question: "How do I cancel?",
-      answer:
-        "Netflix is flexible. There are no pesky contracts and no commitments. You can easily cancel your account online in two clicks. There are no cancellation fees – start or stop your account anytime.",
-    },
-    {
-      question: "What can I watch on Netflix?",
-      answer:
-        "Netflix has an extensive library of feature films, documentaries, TV shows, anime, award-winning Netflix originals, and more. Watch as much as you want, anytime you want.",
-    },
-    {
-      question: "Is Netflix good for kids?",
-      answer:
-        "The Netflix Kids experience is included in your membership to give parents control while kids enjoy family-friendly TV shows and movies in their own space. Kids profiles come with PIN-protected parental controls that let you restrict the maturity rating of content kids can watch and block specific titles you don’t want kids to see.",
-    },
-  ],
-};
-
-const FooterData = {
-  links: [
-    {
-      name: "FAQ",
-      url: "/",
-    },
-    {
-      name: "Help Center",
-      url: "/",
-    },
-    {
-      name: "Account",
-      url: "/",
-    },
-    {
-      name: "Media Center",
-      url: "/",
-    },
-    {
-      name: "Investor Relations",
-      url: "/",
-    },
-    {
-      name: "Jobs",
-      url: "/",
-    },
-    {
-      name: "Redeem Gift Cards",
-      url: "/",
-    },
-    {
-      name: "Buy Gift Cards",
-      url: "/",
-    },
-    {
-      name: "Ways to Watch",
-      url: "/",
-    },
-    {
-      name: "Terms of Use",
-      url: "/",
-    },
-    {
-      name: "Privacy",
-      url: "/",
-    },
-    {
-      name: "Cookie Preferences",
-      url: "/",
-    },
-    {
-      name: "Corporate Information",
-      url: "/",
-    },
-    {
-      name: "Contact Use",
-      url: "/",
-    },
-    {
-      name: "Speed Test",
-      url: "/",
-    },
-    {
-      name: "Legal Notices",
-      url: "/",
-    },
-    {
-      name: "Only on Netflix",
-      url: "/",
-    },
-  ],
-};
-
 export default function Cards() {
   return (
     <React.Fragment>
@@ -174,8 +65,8 @@ export default function Cards() {
       <Gif {...GifData} />
       <Video {...VideoData[1]} />
       <Standart {...StandartData} />
-      <Questions {...QuestionsData} />
-      <Footer {...FooterData} />
+      <Questions title='"Frequently Asked Questions"' />
+      <Footer />
     </React.Fragment>
   );
 }

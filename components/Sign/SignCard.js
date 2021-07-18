@@ -4,6 +4,7 @@ import Link from "next/link";
 import { auth, provider, database } from "../firebase/firebase";
 import { useRouter } from "next/router";
 import SignContext from "../../store/signing-context";
+import { CheckBox } from "../styles/profiles";
 
 const Wrapper = styled.div`
   position: relative;
@@ -16,8 +17,8 @@ const Wrapper = styled.div`
       : "1px solid rgba(255, 255, 255, 0.4)"};
   border-top: ${(props) =>
     props.signUpCard ? "1px solid rgba(0, 0, 0, 0.1)" : "unset"};
-  padding: 0 5%;
   min-height: calc(100vh - 64px);
+  min-height: 100vh;
 
   @media only screen and (min-width: 650px) {
     background: ${(props) => props.stylesMainBg};
@@ -27,6 +28,11 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5%;
   max-width: 450px;
   background-color: ${(props) => (props.signUpCard ? "#fff" : "#000")};
   min-height: 660px;
@@ -84,17 +90,6 @@ const SignError = styled.div`
   }
 `;
 
-const Input = styled.input`
-  background: ${(props) => (props.signUpCard ? "#fff" : "#333")};
-  border-radius: 4px;
-  border: ${(props) => (props.signUpCard ? "solid 1px #000" : "0")};
-  color: ${(props) => (props.signUpCard ? "#000" : "#fff")};
-  height: 50px;
-  line-height: 50px;
-  padding: 16px 20px 0;
-  width: 100%;
-`;
-
 const Btn = styled.button`
   font-size: 1rem;
   min-height: 40px;
@@ -105,6 +100,17 @@ const Btn = styled.button`
   color: #fff;
   background-color: #e50914;
   font-weight: 600;
+`;
+
+const Input = styled.input`
+  background: ${(props) => (props.signUpCard ? "#fff" : "#333")};
+  border-radius: 4px;
+  border: ${(props) => (props.signUpCard ? "solid 1px #000" : "0")};
+  color: ${(props) => (props.signUpCard ? "#000" : "#fff")};
+  height: 50px;
+  line-height: 50px;
+  padding: 16px 20px 0;
+  width: 100%;
 `;
 
 const ErrorMessage = styled.div`
@@ -166,13 +172,7 @@ const InputCheck = styled.input`
   border-radius: 2px;
   overflow: hidden;
 
-  &:checked:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  &:checked {
     background-color: grey;
   }
   &:checked:after {
@@ -237,6 +237,7 @@ export default function SignInCard({ signUpCard, title }) {
     );
     const checkPassword = passwordRef.current.value.length > 3;
 
+    console.log(checkEmail);
     setErrorMail(!checkEmail);
     setErrorPassword(!checkPassword);
 
@@ -271,7 +272,6 @@ export default function SignInCard({ signUpCard, title }) {
           toggleLogIn(true);
           router.push("/browse");
           setUserId(user.user.uid);
-
           remember && localStorage.setItem("userId", user.user.uid);
           remember && localStorage.setItem("email", emailRef.current.value);
           remember &&
@@ -289,11 +289,9 @@ export default function SignInCard({ signUpCard, title }) {
       .signInWithPopup(provider)
       .then((result) => {
         var user = result.user;
-        // console.log(user, user.providerData[0].uid);
         router.push("/browse");
         toggleLogIn(true);
         setUserId(user.providerData[0].uid);
-        // gettingInfo(user.user.uid, { name: 1, use: 2 });
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -318,7 +316,8 @@ export default function SignInCard({ signUpCard, title }) {
             <LeyendSignUpText>We hate paperwork, too.</LeyendSignUpText>
           </LeyendSignUp>
         )}
-        <Form onSubmit={() => submitHandler(event)}>
+        <Form>
+          {/* <Form onSubmit={() => submitHandler(event)}> */}
           {signError === "auth/wrong-password" && (
             <SignError>
               Incorrect password. Please try again or you can
@@ -370,11 +369,14 @@ export default function SignInCard({ signUpCard, title }) {
             </ErrorMessage>
           )}
           {/* <Link href="#">Forgot your password?</Link> */}
-          <Btn>{signUpCard ? "Next" : "Sign In"}</Btn>
+          <Btn onClick={submitHandler} minus={true}>
+            {signUpCard ? "Next" : "Sign In"}
+          </Btn>
           {!signUpCard && (
             <RememberMe>
               <LabelRemeberMe htmlfor="rememberMe">
-                <InputCheck
+                <CheckBox
+                  bgColor="#fff"
                   onClick={() => setRemember((prev) => !prev)}
                   type="checkbox"
                   name="rememberMe"

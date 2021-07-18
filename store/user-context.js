@@ -13,12 +13,7 @@ export default UserContext;
 
 export function UserProvider(props) {
   const [profiles, setProfiles] = useState([]);
-  const [avatar, setAvatar] = useState({
-    avatar: "https://avatars.dicebear.com/api/bottts/377.svg",
-    color: `green`,
-    name: "",
-    index: "",
-  });
+  const [avatar, setAvatar] = useState({});
   const [step, setStep] = useState("showing");
 
   const userContext = {

@@ -3,8 +3,6 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/database";
 
-export const provider = new firebase.auth.FacebookAuthProvider();
-
 var firebaseConfig = {
   apiKey: "AIzaSyC97qU8_YwBOzyf2xp8hLvJwAI6Ok-ndiY",
   authDomain: "newflix-c6f11.firebaseapp.com",
@@ -20,6 +18,8 @@ if (!firebase.apps.length) {
 } else {
   firebase.app();
 }
+
+export const provider = new firebase.auth.FacebookAuthProvider();
 const db = firebase.firestore();
 export default db;
 export const auth = firebase.auth();

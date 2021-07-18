@@ -35,16 +35,16 @@ const IconLangSelect = styled.div`
 `;
 
 const SelectLangList = styled.select`
-  border: solid 1px rgba(255, 255, 255, 0.3);
+  -webkit-appearance: none;
+  /* border: solid 1px rgba(255, 255, 255, 0.3); */
   line-height: 1.6em;
   background: ${(props) => (props.bgColor ? "unset" : "rgba(0, 0, 0, 0.4)")};
   color: inherit;
   font-size: 0.875rem;
   padding: ${(props) => (props.big ? "0.7rem 2.5rem" : "0.2rem 2rem")};
-  -webkit-appearance: none;
 `;
 
-export default function Lang({ big }) {
+export default function Lang() {
   const { pathname } = useRouter();
   return (
     <LangSelectionContainer>
@@ -59,7 +59,7 @@ export default function Lang({ big }) {
             defaultValue="English"
             tabindex="0"
             placeholder="lang-switcher"
-            big={big}
+            big={pathname !== "/"}
           >
             <option lang="es">Español</option>
             <option lang="en">English</option>

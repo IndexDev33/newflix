@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import Lang from "../Header/Lang";
 import CartContainer from "./CardContainer";
+import { useRouter } from "next/router";
 
 const FooterWrapper = styled.div`
   margin-top: 0;
@@ -66,14 +67,109 @@ const FooterTextEnd = styled.p`
   margin-top: 24px;
 `;
 
-export default function FooterCard({ bgImage, title, subtitle, links, big }) {
+const FooterDataBig = [
+  {
+    name: "FAQ",
+    url: "/",
+  },
+  {
+    name: "Help Center",
+    url: "/",
+  },
+  {
+    name: "Account",
+    url: "/",
+  },
+  {
+    name: "Media Center",
+    url: "/",
+  },
+  {
+    name: "Investor Relations",
+    url: "/",
+  },
+  {
+    name: "Jobs",
+    url: "/",
+  },
+  {
+    name: "Redeem Gift Cards",
+    url: "/",
+  },
+  {
+    name: "Buy Gift Cards",
+    url: "/",
+  },
+  {
+    name: "Ways to Watch",
+    url: "/",
+  },
+  {
+    name: "Terms of Use",
+    url: "/",
+  },
+  {
+    name: "Privacy",
+    url: "/",
+  },
+  {
+    name: "Cookie Preferences",
+    url: "/",
+  },
+  {
+    name: "Corporate Information",
+    url: "/",
+  },
+  {
+    name: "Contact Use",
+    url: "/",
+  },
+  {
+    name: "Speed Test",
+    url: "/",
+  },
+  {
+    name: "Legal Notices",
+    url: "/",
+  },
+  {
+    name: "Only on Netflix",
+    url: "/",
+  },
+];
+
+const FooterDataSmall = [
+  {
+    name: "FAQ",
+    url: "/",
+  },
+  {
+    name: "Help Center",
+    url: "/",
+  },
+  {
+    name: "Terms of Use",
+    url: "/",
+  },
+  {
+    name: "Privacy",
+    url: "/",
+  },
+  {
+    name: "Cookie Preferences",
+    url: "/",
+  },
+  {
+    name: "Corporate Information",
+    url: "/",
+  },
+];
+
+export default function FooterCard() {
+  const { pathname } = useRouter();
+  const links = pathname === "/" ? FooterDataBig : FooterDataSmall;
   return (
-    <CartContainer
-      bgImage={bgImage}
-      title={title}
-      subtitle={subtitle}
-      big={big}
-    >
+    <CartContainer>
       <FooterWrapper>
         <FotterContainer>
           <Title>Questions? Call 01 800 917 1563</Title>
@@ -84,8 +180,10 @@ export default function FooterCard({ bgImage, title, subtitle, links, big }) {
               </Link>
             ))}
           </List>
-          <Lang big={big} />
-          <FooterTextEnd>{!big && "Netflix Colombia"}</FooterTextEnd>
+          <Lang />
+          <FooterTextEnd>
+            {pathname === "/" && "Netflix Colombia"}
+          </FooterTextEnd>
         </FotterContainer>
       </FooterWrapper>
     </CartContainer>

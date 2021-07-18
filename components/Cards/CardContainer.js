@@ -9,14 +9,14 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: ${(props) => (props.homePage ? "8px solid #222" : "unset")};
-  padding: 50px 5%;
+  padding: 60px 5%;
   margin-bottom: 0;
   background: ${(props) => props.stylesMainBg};
   background-position: center;
   background-size: cover;
 
   @media only screen and (min-width: 550px) {
-    padding: ${(props) => (props.main ? "80px 10% 150px 10%" : "70px 45px")};
+    padding: ${(props) => (props.main ? "120px 10% 150px 10%" : "70px 45px")};
   }
 
   @media only screen and (min-width: 950px) {

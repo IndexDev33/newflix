@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const HeaderContainer = styled.div`
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;

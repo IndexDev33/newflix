@@ -1,14 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import Cards from "../components/Cards/Cards";
-import styled from "styled-components";
 import SignContext from "../store/signing-context";
 import { auth, provider } from "../components/firebase/firebase";
 import { useRouter } from "next/router";
 import { gettingProfiles } from "../hooks/database";
-
-const Container = styled.div`
-  /* min-height: 100vh; */
-`;
 
 export default function Home() {
   const { toggleLogIn } = useContext(SignContext);
@@ -42,8 +37,8 @@ export default function Home() {
   //TODO: Read local store data and login with those
   //TODO: remove border bottom input on quewstion
   return (
-    <Container>
+    <React.Fragment>
       <Cards />
-    </Container>
+    </React.Fragment>
   );
 }
