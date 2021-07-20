@@ -2,21 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-const Container = styled.div`
-  position: relative;
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
   align-items: center;
   justify-content: space-between;
-  border-bottom: ${(props) => (props.homePage ? "8px solid #222" : "unset")};
-  padding: 60px 5%;
+  border-bottom: 8px solid #333;
+  padding: ${(props) => (props.main ? "6rem 10%" : "3rem 1rem")};
   margin-bottom: 0;
   background: ${(props) => props.stylesMainBg};
   background-position: center;
   background-size: cover;
 
   @media only screen and (min-width: 550px) {
-    padding: ${(props) => (props.main ? "120px 10% 150px 10%" : "70px 45px")};
+    padding: ${(props) => (props.main ? "150px 10%" : "4rem 3rem")};
   }
 
   @media only screen and (min-width: 950px) {
@@ -74,12 +74,9 @@ export default function CardContainer({
   subtitle,
   direction,
   main,
+  noBorder,
 }) {
   const { pathname } = useRouter();
-
-  // const stylesMainBg = main
-  //   ? `linear-gradient(to top, rgba(0, 0, 0, 0.8) 0,  rgba(0, 0, 0, 0) 40%,  rgba(0, 0, 0, 0) 75%,  rgba(0, 0, 0, 0.8) 100%),url('${bgImage}')`
-  //   : "";
 
   const stylesMainBg =
     pathname === "/signup"
@@ -89,12 +86,13 @@ export default function CardContainer({
       : "";
 
   return (
-    <Container
+    <Wrapper
       stylesMainBg={stylesMainBg}
       bgImage={bgImage}
       direction={direction}
       main={main}
       homePage={pathname === "/"}
+      noBorder={noBorder}
     >
       {title && (
         <TextContainer main={main}>
@@ -102,8 +100,7 @@ export default function CardContainer({
           <Subtitle main={main}>{subtitle}</Subtitle>
         </TextContainer>
       )}
-
       {children}
-    </Container>
+    </Wrapper>
   );
 }

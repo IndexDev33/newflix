@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import SmallCarousel from "./SmallCarousel";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Image from "next/image";
 import UserContext from "../../store/user-context";
-import { Container, ImgContainer } from "../styles/profiles";
+import { Container, ImgContainer } from "../styles/basics";
+import { ArrowBack } from "@material-ui/icons";
 
 const Controls = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
@@ -16,6 +16,7 @@ const Controls = styled.div`
   height: 50px;
   z-index: 10;
   display: flex;
+  padding: 0 1rem;
   justify-content: space-between;
 `;
 
@@ -48,14 +49,14 @@ const arrayCarousels = [
   { type: "micah", lengthCarousel: 10 },
 ];
 
-export default function ChooseAvatar({ onChoosing, onChooseAvatar }) {
+export default function ChooseAvatar() {
   const { avatar, setStep, step } = useContext(UserContext);
   return (
-    <Container>
+    <Container maxWidth="100vw" variation={true}>
       <Controls>
         <InfoContainer>
           <div onClick={() => setStep(step.split("-")[0])}>
-            <ArrowBackIcon />
+            <ArrowBack />
           </div>
           <Text>
             <h4>Edit Profile</h4>

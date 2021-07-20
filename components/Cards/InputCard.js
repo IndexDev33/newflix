@@ -1,9 +1,8 @@
 import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
-import CartContainer from "./CardContainer";
+import CardWrapper from "./CardWrapper";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { useRouter } from "next/router";
-
 import SignContext from "../../store/signing-context";
 
 const Form = styled.form`
@@ -13,20 +12,17 @@ const Form = styled.form`
   justify-content: center;
   gap: 1rem;
   max-width: 1100px;
+  padding: 10px;
 `;
 
-const Subtitle = styled.h3`
+const TitleForm = styled.h3`
   font-size: 1.1rem;
   font-weight: lighter;
-  margin: 0.5rem 1rem;
+  margin: 0;
   text-align: center;
 
   @media only screen and (min-width: 550px) {
-    font-size: 18px;
-    padding: 0 9%;
-  }
-  @media only screen and (min-width: 950px) {
-    padding: 0 5%;
+    font-size: 1.2rem;
   }
 `;
 
@@ -42,8 +38,9 @@ const ContainerInput = styled.div`
     gap: 0;
   }
 `;
+
 const Input = styled.input`
-  height: 48px;
+  min-height: 48px;
   padding: 10px;
   width: 100%;
   color: #8c8c8c;
@@ -51,6 +48,7 @@ const Input = styled.input`
   align-items: center;
   justify-content: center;
   font-family: "Netflix", serif;
+
   @media only screen and (min-width: 950px) {
     height: 100%;
   }
@@ -71,6 +69,7 @@ const Btn = styled.button`
   display: flex;
   align-items: center;
   gap: 0.3rem;
+
   @media only screen and (min-width: 950px) {
     width: 100%;
     justify-content: center;
@@ -103,7 +102,7 @@ const ErrorMessage = styled.div`
   }
 `;
 
-export default function InputCard({ bgImage, title, subtitle }) {
+export default function InputCard({ bgImage, title, subtitle, inline }) {
   const router = useRouter();
   const [errorMail, setErrorMail] = useState(null);
   const inputRef = useRef();
@@ -130,22 +129,45 @@ export default function InputCard({ bgImage, title, subtitle }) {
     } else {
       setErrorMail(0);
       router.push("/signup");
-      console.log(inputRef.current.value);
       setEmail(inputRef.current.value);
     }
   };
 
-  return (
-    <CartContainer
+  const renderWithContainer = inline ? (
+    <Form>
+      <TitleForm>
+        Ready to watch? Enter your email to create or restart your membership.
+      </TitleForm>
+      <ContainerInput>
+        <Input
+          ref={inputRef}
+          type="email"
+          tabindex="0"
+          autocomplete="email"
+          maxlength="50"
+          minlength="5"
+          placeholder="Email Address"
+        />
+        {errorMail > 0 && messageValidate}
+        <Btn onClick={() => clickHandler(event)}>
+          Get Started
+          <IconContainer>
+            <ArrowForwardIosIcon style={{ fontSize: "inherit" }} />
+          </IconContainer>
+        </Btn>
+      </ContainerInput>
+    </Form>
+  ) : (
+    <CardWrapper
       bgImage={bgImage}
       title={title}
       subtitle={subtitle}
       main={true}
     >
       <Form>
-        <Subtitle>
+        <TitleForm>
           Ready to watch? Enter your email to create or restart your membership.
-        </Subtitle>
+        </TitleForm>
         <ContainerInput>
           <Input
             ref={inputRef}
@@ -165,6 +187,8 @@ export default function InputCard({ bgImage, title, subtitle }) {
           </Btn>
         </ContainerInput>
       </Form>
-    </CartContainer>
+    </CardWrapper>
   );
+
+  return <React.Fragment>{renderWithContainer}</React.Fragment>;
 }

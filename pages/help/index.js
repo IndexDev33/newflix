@@ -1,11 +1,11 @@
 import React from "react";
-import SignUpCard from "../../components/Sign/SignUpCard";
+import RecoveryCard from "../../components/Sign/RecoveryCard";
 import FooterCard from "../../components/Cards/FooterCard";
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <React.Fragment>
-      <SignUpCard />
+      <RecoveryCard />
       <FooterCard />
     </React.Fragment>
   );

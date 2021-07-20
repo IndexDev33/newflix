@@ -1,12 +1,12 @@
 import React from "react";
-import Sign from "../../components/Sign/SignCard";
-import Footer from "../../components/Cards/Footer";
+import SignInCard from "../../components/Sign/SignInCard";
+import FooterCard from "../../components/Cards/FooterCard";
 
 export default function SignIn() {
   return (
     <React.Fragment>
-      <Sign title="Sign In" />
-      <Footer />
+      <SignInCard />
+      <FooterCard />
     </React.Fragment>
   );
 }

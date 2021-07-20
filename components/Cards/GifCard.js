@@ -1,23 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import CartContainer from "./CardContainer";
+import CardWrapper from "./CardWrapper";
+import { CardImage } from "../styles/cards";
 
 const Container = styled.div`
   position: relative;
   max-width: 550px;
+
   @media only screen and (min-width: 950px) {
     width: 85%;
   }
 `;
+
 const GifContainer = styled.div`
   position: absolute;
   left: 50%;
   bottom: 8%;
-  transform: translateX(-50%);
-  background: #000;
   display: flex;
   align-items: center;
-  width: 60%;
+  gap: 1rem;
+  transform: translateX(-50%);
+  background: #000;
+  width: 55%;
   min-width: 15em;
   padding: 0.25em 0.65em;
   border: 2px solid rgba(255, 255, 255, 0.25);
@@ -29,9 +33,6 @@ const GifContainer = styled.div`
     content: "";
     width: 3em;
     height: 3em;
-    outline: 2px solid #000;
-    outline-offset: -2px;
-    display: block;
     background: url(${(props) => props.gif}) center center no-repeat;
     background-size: 100%;
     flex-shrink: 0;
@@ -39,31 +40,22 @@ const GifContainer = styled.div`
   }
 
   @media only screen and (min-width: 950px) {
-    width: 50%;
+    width: 65%;
   }
 `;
 
-const CardAnimationImage = styled.img`
-  position: relative;
-  z-index: 2;
-  max-width: 100%;
-  height: auto;
-  border: 0;
-`;
-
-const Text = styled.div`
+const TextGif = styled.div`
   flex-grow: 1;
   flex-shrink: 1;
-  margin: 0.3em 0;
 `;
 
-const Serie = styled.div`
+const SerieGif = styled.div`
   font-weight: 600;
   font-size: 0.9em;
 `;
-const Download = styled.div`
+
+const DownloadTextGif = styled.div`
   color: #0071eb;
-  font-weight: 400;
   font-size: 0.75em;
 `;
 
@@ -72,29 +64,28 @@ const Cover = styled.img`
   flex-grow: 0;
   flex-shrink: 0;
   height: 3em;
+
+  @media only screen and (min-width: 650px) {
+    height: 4em;
+  }
 `;
 
-export default function GifCard({ bgImage, title, subtitle, image, gif }) {
+export default function GifCard({ title, subtitle, image, gif }) {
   return (
-    <CartContainer
-      bgImage={bgImage}
-      title={title}
-      subtitle={subtitle}
-      direction="row-reverse"
-    >
+    <CardWrapper title={title} subtitle={subtitle} direction="row-reverse">
       <Container>
-        <CardAnimationImage src={image} />
+        <CardImage src={image} />
         <GifContainer gif={gif}>
           <Cover
             alt=""
             src="https://assets.nflxext.com/ffe/siteui/acquisition/ourStory/fuji/desktop/boxshot.png"
           />
-          <Text>
-            <Serie>Stranger Things</Serie>
-            <Download>Downloading...</Download>
-          </Text>
+          <TextGif>
+            <SerieGif>Stranger Things</SerieGif>
+            <DownloadTextGif>Downloading...</DownloadTextGif>
+          </TextGif>
         </GifContainer>
       </Container>
-    </CartContainer>
+    </CardWrapper>
   );
 }

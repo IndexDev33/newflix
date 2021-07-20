@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import Cards from "../components/Cards/Cards";
+import CardsFactory from "../components/Cards/CardsFactory";
 import SignContext from "../store/signing-context";
 import { auth, provider } from "../components/firebase/firebase";
 import { useRouter } from "next/router";
@@ -35,10 +35,9 @@ export default function Home() {
 
   // }
   //TODO: Read local store data and login with those
-  //TODO: remove border bottom input on quewstion
   return (
     <React.Fragment>
-      <Cards />
+      <CardsFactory />
     </React.Fragment>
   );
 }

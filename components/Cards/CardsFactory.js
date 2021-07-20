@@ -1,10 +1,10 @@
 import React from "react";
-import Video from "../Cards/Video";
-import Gif from "./Gif";
-import Input from "./Input";
-import Questions from "./Questions";
-import Footer from "./Footer";
-import Standart from "./Standart";
+import VideoCard from "./VideoCard";
+import GifCard from "./GifCard";
+import InputCard from "./InputCard";
+import QuestionsCard from "./QuestionsCard";
+import FooterCard from "./FooterCard";
+import StandartCard from "./StandartCard";
 
 const InputData = {
   title: "Unlimited movies, TV shows, and more.",
@@ -59,14 +59,14 @@ const StandartData = {
 
 export default function Cards() {
   return (
-    <React.Fragment>
-      <Input {...InputData} />
-      <Video {...VideoData[0]} />
-      <Gif {...GifData} />
-      <Video {...VideoData[1]} />
-      <Standart {...StandartData} />
-      <Questions title='"Frequently Asked Questions"' />
-      <Footer />
-    </React.Fragment>
+    <>
+      <InputCard {...InputData} />
+      <VideoCard {...VideoData[0]} />
+      <GifCard {...GifData} />
+      <VideoCard {...VideoData[1]} />
+      <StandartCard {...StandartData} />
+      <QuestionsCard title='"Frequently Asked Questions"' />
+      <FooterCard />
+    </>
   );
 }

@@ -2,25 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import Lang from "../Header/Lang";
-import CartContainer from "./CardContainer";
+import CardWrapper from "./CardWrapper";
 import { useRouter } from "next/router";
 
-const FooterWrapper = styled.div`
-  margin-top: 0;
-  min-width: 190px;
-  width: 100%;
-  font-size: 1em;
-  color: #757575;
+const FotterContainer = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
-`;
-
-const FotterContainer = styled.div`
-  width: 90%;
-  display: flex;
-  flex-direction: column;
   align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  color: grey;
+  padding: 0 5%;
+  gap: 1rem;
+
   @media only screen and (min-width: 950px) {
     flex-wrap: wrap;
     align-content: space-around;
@@ -28,33 +22,26 @@ const FotterContainer = styled.div`
 `;
 
 const Title = styled.p`
-  padding: 0;
   margin: 0 0 30px;
 `;
 
 const List = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
   padding: 0;
   margin: 0;
   max-width: 1100px;
   font-size: 13px;
-  text-align: left;
-  display: flex;
-  flex-wrap: wrap;
 `;
 
 const Item = styled.li`
-  margin-left: 0;
-  width: 50%;
-  padding: 0;
   margin-bottom: 16px;
-  display: inline-block;
+  width: 50%;
   list-style: none;
   min-width: 100px;
-  padding-right: 12px;
 
   @media only screen and (min-width: 550px) {
     width: 33%;
-    text-align: left;
   }
 
   @media only screen and (min-width: 950px) {
@@ -64,104 +51,103 @@ const Item = styled.li`
 
 const FooterTextEnd = styled.p`
   font-size: 13px;
-  margin-top: 24px;
 `;
 
 const FooterDataBig = [
   {
     name: "FAQ",
-    url: "/",
+    url: "https://help.netflix.com/en/node/412",
   },
   {
     name: "Help Center",
-    url: "/",
+    url: "https://help.netflix.com/en/",
   },
   {
     name: "Account",
-    url: "/",
+    url: "https://www.netflix.com/youraccount",
   },
   {
     name: "Media Center",
-    url: "/",
+    url: "https://media.netflix.com/",
   },
   {
     name: "Investor Relations",
-    url: "/",
+    url: "http://ir.netflix.com/",
   },
   {
     name: "Jobs",
-    url: "/",
+    url: "https://jobs.netflix.com/jobs",
   },
   {
     name: "Redeem Gift Cards",
-    url: "/",
+    url: "https://www.netflix.com/redeem",
   },
   {
     name: "Buy Gift Cards",
-    url: "/",
+    url: "https://www.netflix.com/gift-cards",
   },
   {
     name: "Ways to Watch",
-    url: "/",
+    url: "https://www.netflix.com/watch",
   },
   {
     name: "Terms of Use",
-    url: "/",
+    url: "https://help.netflix.com/legal/termsofuse",
   },
   {
     name: "Privacy",
-    url: "/",
+    url: "https://help.netflix.com/legal/privacy",
   },
   {
     name: "Cookie Preferences",
-    url: "/",
+    url: "https://www.netflix.com/co-en/#",
   },
   {
     name: "Corporate Information",
-    url: "/",
+    url: "https://help.netflix.com/legal/corpinfo",
   },
   {
     name: "Contact Use",
-    url: "/",
+    url: "https://help.netflix.com/contactus",
   },
   {
     name: "Speed Test",
-    url: "/",
+    url: "https://fast.com/",
   },
   {
     name: "Legal Notices",
-    url: "/",
+    url: "https://help.netflix.com/legal/notices",
   },
   {
     name: "Only on Netflix",
-    url: "/",
+    url: "https://www.netflix.com/co-en/browse/genre/839338",
   },
 ];
 
 const FooterDataSmall = [
   {
     name: "FAQ",
-    url: "/",
+    url: "https://help.netflix.com/en/node/412",
   },
   {
     name: "Help Center",
-    url: "/",
+    url: "https://help.netflix.com/en/",
   },
   {
     name: "Terms of Use",
-    url: "/",
+    url: "https://help.netflix.com/legal/termsofuse",
   },
   {
     name: "Privacy",
-    url: "/",
+    url: "https://help.netflix.com/legal/privacy",
   },
   {
     name: "Cookie Preferences",
-    url: "/",
+    url: "https://www.netflix.com/co-en/#",
   },
   {
     name: "Corporate Information",
-    url: "/",
+    url: "https://help.netflix.com/legal/corpinfo",
   },
 ];
 
@@ -169,23 +155,19 @@ export default function FooterCard() {
   const { pathname } = useRouter();
   const links = pathname === "/" ? FooterDataBig : FooterDataSmall;
   return (
-    <CartContainer>
-      <FooterWrapper>
-        <FotterContainer>
-          <Title>Questions? Call 01 800 917 1563</Title>
-          <List>
-            {links.map((link, i) => (
-              <Link key={i} href={link.url}>
-                <Item>{link.name}</Item>
-              </Link>
-            ))}
-          </List>
-          <Lang />
-          <FooterTextEnd>
-            {pathname === "/" && "Netflix Colombia"}
-          </FooterTextEnd>
-        </FotterContainer>
-      </FooterWrapper>
-    </CartContainer>
+    <CardWrapper>
+      <FotterContainer>
+        <Title>Questions? Call 01 800 917 1563</Title>
+        <List>
+          {links.map((link, i) => (
+            <Link key={i} href={link.url}>
+              <Item>{link.name}</Item>
+            </Link>
+          ))}
+        </List>
+        <Lang />
+        {pathname === "/" && <FooterTextEnd>IndexDev</FooterTextEnd>}
+      </FotterContainer>
+    </CardWrapper>
   );
 }

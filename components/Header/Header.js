@@ -18,6 +18,8 @@ const HeaderContainer = styled.div`
   max-width: 1920px;
   padding-top: 20px;
   transition: background-color 0.5s;
+  border-bottom: ${(props) =>
+    props.signUp ? "1px solid rgba(0, 0, 0, 0.2)" : "unset"};
 `;
 
 const HeaderDiv = styled.div`
@@ -38,24 +40,24 @@ const SingInBtn = styled.div`
   white-space: nowrap;
   font-size: 0.9rem;
   padding: 0.25rem 0.5rem;
-  background-color: #e50914;
+  background-color: ${(props) => (props.signUp ? "transparent" : "#e50914")};
   line-height: normal;
-  font-weight: 400;
+  font-weight: 600;
   border-radius: 3px;
   cursor: pointer;
 `;
 
 export default function Header() {
   const { pathname } = useRouter();
-
+  const pathnameSignIn = pathname === "/" || pathname === "/signup";
   return (
-    <HeaderContainer>
+    <HeaderContainer signUp={pathname !== "/"}>
       <HeaderDiv>
         <Logo onClick={() => console.log(router)} />
         {pathname === "/" && <Lang />}
-        {pathname === "/" && (
+        {pathnameSignIn && (
           <Link href="/signin">
-            <SingInBtn onClick={() => console.log(pathname)}>Sign In</SingInBtn>
+            <SingInBtn signUp={pathname === "/signup"}>Sign In</SingInBtn>
           </Link>
         )}
       </HeaderDiv>

@@ -1,8 +1,18 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { ArrowForwardIos } from "@material-ui/icons";
 import Image from "next/image";
 import UserContext from "../../store/user-context";
+import { ImgContainer } from "../styles/basics";
+
+const CarouselContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+  position: relative;
+  align-items: flex-start;
+`;
 
 const Title = styled.h1`
   width: 100%;
@@ -11,45 +21,26 @@ const Title = styled.h1`
   font-size: 1.8rem;
 `;
 
-const CarouselContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 1rem;
-  position: relative;
-`;
-
 const CarouselDiv = styled.div`
+  position: relative;
   display: flex;
+  justify-content: flex-start;
   width: 90vw;
   gap: 1rem;
   overflow: scroll;
   scroll-behavior: smooth;
-  position: relative;
+
+  & * {
+    height: 90px;
+    width: 90px;
+  }
 
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const ImgContainer = styled.div`
-  border-radius: 5px;
-  background-color: ${(props) => props.color};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-`;
-
-const ProfileImage = styled.img`
-  height: 90px;
-  width: 90px;
-`;
-
 const Arrow = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  height: 100px;
-  width: 30px;
   position: absolute;
   bottom: 0;
   right: -10px;
@@ -57,6 +48,9 @@ const Arrow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100px;
+  width: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
 
   & * {
     opacity: 0;
@@ -85,11 +79,12 @@ const colors = [
 ];
 
 export default function SmallCarousel({ type, length }) {
+  const { setAvatar, avatar } = useContext(UserContext);
+
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
   const carouselRef = useRef(null);
   const containerRef = useRef(null);
-  const { setAvatar, avatar } = useContext(UserContext);
   const renderContent = colors.slice(0, length);
 
   useEffect(() => {
@@ -127,7 +122,7 @@ export default function SmallCarousel({ type, length }) {
       <Title>{type.toUpperCase()}</Title>
       {showRight && (
         <Arrow onClick={() => scrollHandler("right")}>
-          <ArrowForwardIosIcon />
+          <ArrowForwardIos />
         </Arrow>
       )}
 
@@ -136,7 +131,7 @@ export default function SmallCarousel({ type, length }) {
           style={{ left: "-10px", transform: "rotate(180deg)" }}
           onClick={() => scrollHandler("left")}
         >
-          <ArrowForwardIosIcon />
+          <ArrowForwardIos />
         </Arrow>
       )}
 
@@ -154,8 +149,11 @@ export default function SmallCarousel({ type, length }) {
               })
             }
           >
-            <ProfileImage
+            <Image
               src={`https://avatars.dicebear.com/api/${type}/${i}.svg`}
+              alt="Profile Image"
+              height="100"
+              width="100"
             />
           </ImgContainer>
         ))}

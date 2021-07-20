@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import AddIcon from "@material-ui/icons/Add";
-import CartContainer from "./CardContainer";
-import InputCard from "./Input";
+import CardWrapper from "./CardWrapper";
+import InputCard from "./InputCard";
 
 const Container = styled.ul`
   max-width: 815px;
@@ -108,7 +108,7 @@ export default function QuestionsCard({ title }) {
   const [showAnswer, setShowAnswer] = useState(null);
 
   return (
-    <CartContainer title={title}>
+    <CardWrapper title={title}>
       <Container>
         {questions.map((question, i) => (
           <Item key={i}>
@@ -127,8 +127,8 @@ export default function QuestionsCard({ title }) {
             </Answer>
           </Item>
         ))}
+        <InputCard inline={1} />
       </Container>
-      <InputCard />
-    </CartContainer>
+    </CardWrapper>
   );
 }

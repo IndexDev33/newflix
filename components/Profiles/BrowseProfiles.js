@@ -1,16 +1,10 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlined";
 import Link from "next/link";
-import CreateIcon from "@material-ui/icons/Create";
 import UserContext from "../../store/user-context";
 import Image from "next/image";
-import {
-  Container,
-  ImgContainer,
-  Title,
-  ProfilesBtn,
-} from "../styles/profiles";
+import { Create, AddCircleOutlined } from "@material-ui/icons";
+import { Container, ImgContainer, Title, ProfilesBtn } from "../styles/basics";
 
 const Profiles = styled.ul`
   display: flex;
@@ -91,14 +85,14 @@ export default function BrowseProfiles() {
               <ImgContainer color={profile.color}>
                 {manage && (
                   <EditingProfile>
-                    <CreateIcon style={{ fontSize: "inherit" }} />
+                    <Create style={{ fontSize: "inherit" }} />
                   </EditingProfile>
                 )}
                 <Image
                   src={profile.avatar}
                   alt="Profile Image"
-                  height="100"
-                  width="100"
+                  height="90"
+                  width="90"
                 />
               </ImgContainer>
               <ProfileName>{profile.name}</ProfileName>
@@ -108,7 +102,7 @@ export default function BrowseProfiles() {
         {profiles.length < 5 && (
           <Profile onClick={createHandler}>
             <ImgContainer style={{ backgroundColor: "transparent" }}>
-              <AddCircleOutlinedIcon style={{ fontSize: "inherit" }} />
+              <AddCircleOutlined style={{ fontSize: "inherit" }} />
             </ImgContainer>
             <ProfileName>Add Profile</ProfileName>
           </Profile>

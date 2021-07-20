@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
-import CreateIcon from "@material-ui/icons/Create";
+import { Create } from "@material-ui/icons";
 import UserContext from "../../store/user-context";
 import { database } from "../firebase/firebase";
 import {
@@ -10,7 +10,7 @@ import {
   ProfilesBtn,
   Input,
   CheckBox,
-} from "../styles/profiles";
+} from "../styles/basics";
 import Image from "next/image";
 
 const Subtitle = styled.p`
@@ -32,8 +32,10 @@ const NewProfile = styled.div`
   align-items: center;
   gap: 1.5rem;
   margin: 1rem 0;
+  /* max-width: 450px; */
 
   @media only screen and (min-width: 650px) {
+    margin: 0 auto;
     flex-direction: row;
     border-top: solid rgba(255, 255, 255, 0.5) 1px;
     border-bottom: solid rgba(255, 255, 255, 0.5) 1px;
@@ -128,7 +130,7 @@ export default function EditingProfile({ userId }) {
       <NewProfile>
         <ImgContainer color={avatar.color}>
           <Icon onClick={editingAvatarHandler}>
-            <CreateIcon style={{ fontSize: "inherit" }} />
+            <Create style={{ fontSize: "inherit" }} />
           </Icon>
           <Image
             src={avatar.avatar}

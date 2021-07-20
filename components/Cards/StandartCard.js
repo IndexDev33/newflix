@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CartContainer from "./CardContainer";
+import CardWrapper from "./CardWrapper";
 
 const CardAnimation = styled.div`
   position: relative;
@@ -20,7 +20,7 @@ const CardAnimationImage = styled.img`
 
 export default function StandartCard({ bgImage, title, subtitle, image }) {
   return (
-    <CartContainer
+    <CardWrapper
       bgImage={bgImage}
       title={title}
       subtitle={subtitle}
@@ -29,6 +29,6 @@ export default function StandartCard({ bgImage, title, subtitle, image }) {
       <CardAnimation>
         <CardAnimationImage src={image} />
       </CardAnimation>
-    </CartContainer>
+    </CardWrapper>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import CartContainer from "./CardContainer";
+import CardWrapper from "./CardWrapper";
+import { CardImage } from "../styles/cards";
 
 const CardAnimation = styled.div`
   position: relative;
@@ -8,14 +9,6 @@ const CardAnimation = styled.div`
   @media only screen and (min-width: 950px) {
     width: 85%;
   }
-`;
-
-const CardAnimationImage = styled.img`
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: auto;
-  border: 0;
 `;
 
 const CardAnimationVideo = styled.video`
@@ -38,14 +31,14 @@ export default function VideoCard({
   top,
 }) {
   return (
-    <CartContainer
+    <CardWrapper
       bgImage={bgImage}
       title={title}
       subtitle={subtitle}
       direction="row"
     >
       <CardAnimation>
-        <CardAnimationImage src={image} />
+        <CardImage src={image} />
         <CardAnimationVideo
           top={top}
           maxWidth={maxWidth}
@@ -57,6 +50,6 @@ export default function VideoCard({
           playsInline
         />
       </CardAnimation>
-    </CartContainer>
+    </CardWrapper>
   );
 }
