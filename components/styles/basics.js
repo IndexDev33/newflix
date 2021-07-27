@@ -5,7 +5,8 @@ export const Container = styled.div`
   padding-top: ${(props) => (props.variation ? "4rem" : "unset")};
   flex-direction: column;
   min-height: 100vh;
-  justify-content: center;
+  justify-content: ${(props) => (props.align ? "flex-start" : "center")};
+  /* justify-content: center; */
   align-items: center;
   gap: 0.5rem;
   outline: solid red 5px;

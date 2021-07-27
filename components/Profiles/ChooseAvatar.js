@@ -52,7 +52,7 @@ const arrayCarousels = [
 export default function ChooseAvatar() {
   const { avatar, setStep, step } = useContext(UserContext);
   return (
-    <Container maxWidth="100vw" variation={true}>
+    <Container maxWidth="100vw" variation={true} align={true}>
       <Controls>
         <InfoContainer>
           <div onClick={() => setStep(step.split("-")[0])}>
