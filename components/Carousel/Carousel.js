@@ -18,18 +18,15 @@ const Container = styled.div`
   .swiper-container:hover .swiper-button-prev {
     opacity: 1;
   }
-
   .swiper-wrapper {
     padding: 10% 0;
     /* background-color: blueviolet; */
   }
-
   .swiper-button-next,
   .swiper-button-prev {
     color: #fff;
     opacity: 0;
   }
-
   .swiper-pagination-bullets {
     top: 19%;
     left: unset;
@@ -41,7 +38,6 @@ const Container = styled.div`
     opacity: 0;
     z-index: 1;
   }
-
   .swiper-pagination-bullets .swiper-pagination-bullet {
     height: 4px;
     border-radius: unset;
@@ -49,7 +45,6 @@ const Container = styled.div`
     margin: 0 1px;
     padding: 0;
   }
-
   .swiper-pagination-bullet-active {
     background-color: white;
   }
@@ -69,7 +64,6 @@ const ContainerCard = styled.div`
   position: relative;
   transform-origin: center 125%;
   transition: 1s;
-
   &:hover {
     transform: scale(1.3);
     z-index: 10;
@@ -101,7 +95,6 @@ const DetailsCard = styled.div`
   transform: translateY(99%) translateX(-50%);
   transition: 1s;
   left: 50%;
-
   ${ContainerCard}:hover & {
     width: 90%;
     opacity: 1;
