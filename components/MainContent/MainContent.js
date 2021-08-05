@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: flex-end;
   justify-content: center;
   height: 80vh;
-  background: linear-gradient(rgba(255, 255, 255, 0) 60%, #1d1d1d),
+  background: linear-gradient(rgba(255, 255, 255, 0) 60%, #141414),
     url(${(props) => props.poster});
   background-position: center;
   background-size: cover;
@@ -19,7 +19,8 @@ const Container = styled.div`
   margin-bottom: 2vw;
 
   @media (min-width: 768px) {
-    background: linear-gradient(rgba(255, 255, 255, 0) 60%, #1d1d1d),
+    height: 50vh;
+    background: linear-gradient(rgba(255, 255, 255, 0) 60%, #141414),
       url(${(props) => props.backdrop});
     background-position: center;
     background-size: cover;
@@ -27,10 +28,10 @@ const Container = styled.div`
     margin-bottom: -12vw;
   }
   @media (min-width: 992px) {
-    height: 90vh;
+    height: 80vh;
   }
   @media (min-width: 1200px) {
-    height: 100vh;
+    height: 90vh;
   }
 `;
 
@@ -123,7 +124,12 @@ export default function MainContent({ media }) {
         </BtnContainer>
       </Details>
       <DetailsWide>
-        <Overview>{overview}</Overview>
+        <Overview>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
+          ipsum finibus, rhoncus neque vitae, maximus tellus. In lectus nunc,
+          fringilla in porttitor eu, imperdiet venenatis purus. Sed vehicula
+          elit magna, tristique fringilla purus consectetur eu.
+        </Overview>
         <BtnsContainerWide>
           <BtnWide onClick={() => console.log("play")}>
             <PlayArrow />

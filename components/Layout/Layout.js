@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { UserProvider } from "../../store/user-context";
 
 const LayoutWrapper = styled.div`
-  background-color: ${(props) => (props.singup ? "#fff" : "#000")};
+  background-color: ${(props) => (props.singup ? "#fff" : "#141414")};
   color: ${(props) => (props.singup ? "#000" : "#fff")};
 `;
 

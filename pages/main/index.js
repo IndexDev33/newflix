@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "../../components/Carousel/Carousel";
 import MainContent from "../../components/MainContent/MainContent";
 
